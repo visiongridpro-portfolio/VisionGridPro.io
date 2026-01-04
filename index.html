@@ -1,42 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VisionGridPro | Motion Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#0a0a0a;color:white}
-nav{position:fixed;top:0;width:100%;padding:20px 10%;display:flex;justify-content:space-between;background:#0a0a0a;z-index:10}
-nav a{color:white;text-decoration:none;margin-left:20px;opacity:.7}
-nav a:hover{opacity:1}
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.hero h1{font-size:4rem}
-.hero span{color:#00ffd5}
-.hero p{margin-top:15px;opacity:.6}
-.hero a{margin-top:35px;padding:15px 40px;border:1px solid #00ffd5;color:#00ffd5;text-decoration:none;border-radius:30px}
-.hero a:hover{background:#00ffd5;color:black}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tentang Galaksi</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
+  <header class="header">
+    <input type="text" placeholder="Galaksi itu apa sih?" class="search-bar" />
+    <div class="auth-buttons">
+      <button class="btn login">LOGIN</button>
+      <button class="btn signup">BUAT AKUN</button>
+    </div>
+  </header>
 
-<nav>
-  <strong>VisionGridPro</strong>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="work.html">Work</a>
-    <a href="services.html">Services</a>
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
+  <main class="main-content">
+    <section class="intro fade-in">
+      <h1>CHALLENGE UI + WEB DESIGN</h1>
+      <h2>TENTANG Galaksi</h2>
+      <p class="credit">ASKAR AKMIL DESIGN</p>
+    </section>
 
-<section class="hero">
-  <h1>Hi, I'm <span>Chetan</span></h1>
-  <p>Cinematic Motion Designer & Video Editor</p>
-  <a href="work.html">View Portfolio</a>
-</section>
+    <section class="info-box fade-in">
+      <h3>GALAKSI ADALAH...</h3>
+      <p>
+        Kumpulan besar bintang, gas, dan debu yang terikat oleh gravitasi. Mereka bisa berbentuk spiral, elips, atau tak beraturan. Contoh terkenal adalah Galaksi Bima Sakti.
+      </p>
+    </section>
 
+    <section class="galaxy-explained fade-in">
+      <h3>PENJELASAN SINGKAT TENTANG GALAKSI</h3>
+      <div class="text-boxes">
+        <div class="box">
+          <p>
+            Galaksi biasanya dikelompokkan dalam gugus galaksi atau supergugus galaksi, yang merupakan struktur terbesar yang dikenal di alam semesta...
+          </p>
+          <button class="btn">Lanjutin uy...</button>
+        </div>
+        <div class="box">
+          <p>
+            Galaksi-galaksi ini dapat saling berinteraksi melalui gaya gravitasi, yang dapat menyebabkan pergeseran atau penggabungan galaksi.
+          </p>
+          <button class="btn">Sampe sini aja.</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="scroll-indicator">GULIR ↓</div>
+
+    <section class="gallery fade-in">
+      <div class="image-grid">
+        <div class="image-item">🌠</div>
+        <div class="image-item">🚀</div>
+        <div class="image-item">🪐</div>
+        <div class="image-item">✨</div>
+        <div class="image-item">➕</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    CREATED BY MUHAMMAD FAJRI
+  </footer>
 </body>
 </html>
