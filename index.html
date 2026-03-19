@@ -3,351 +3,532 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video editor portfolio · YELO</title>
-    <!-- Google Fonts for clean typography (editable) -->
+    <title>YELO · Video Editor Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
     <style>
-        /* === RESET & BASE === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0c0b09;
+            --surface: #161410;
+            --card: #1c1a17;
+            --accent: #d4a847;
+            --accent2: #e8c76a;
+            --text: #f0ebe0;
+            --muted: #7a7468;
+            --border: rgba(212,168,71,0.15);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: #faf9f6;
-            color: #1e1e1e;
-            line-height: 1.5;
-            padding: 2rem 1.5rem;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* NOISE TEXTURE OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.6;
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        /* === TYPOGRAPHY (easy to edit) === */
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
+        /* ── HEADER ── */
+        header {
+            padding: 4rem 0 3rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: 'YELO';
+            position: absolute;
+            right: -2rem;
+            top: -1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18rem;
+            color: rgba(212,168,71,0.04);
+            pointer-events: none;
+            line-height: 1;
             letter-spacing: -0.02em;
-            line-height: 1.1;
         }
 
-        h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 2rem;
-            border-bottom: 3px solid #e6e3db;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin: 1rem 0 0.5rem;
-        }
-
-        .subhead {
-            font-size: 1.2rem;
-            color: #4a4a4a;
-            max-width: 650px;
-            margin: 1.5rem 0 2.5rem;
-        }
-
-        /* === HEADER / HERO === */
-        .hero {
-            margin-bottom: 3rem;
-        }
-
-        .tagline {
-            display: inline-block;
-            background: #e6e3db;
-            padding: 0.3rem 1rem;
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(212,168,71,0.1);
+            border: 1px solid rgba(212,168,71,0.3);
+            padding: 0.3rem 0.9rem;
             border-radius: 40px;
+            font-size: 0.75rem;
             font-weight: 500;
-            font-size: 0.9rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--accent2);
             margin-bottom: 1.5rem;
         }
 
-        /* === VIDEO GRID === */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0 4rem;
+        .badge::before { content: '◈'; font-size: 0.7rem; }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 9rem);
+            letter-spacing: -0.01em;
+            line-height: 0.9;
+            color: var(--text);
         }
 
+        h1 span { color: var(--accent); }
+
+        .subhead {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-top: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 4rem 0 2rem;
+        }
+
+        .section-label h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── GRID ── */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+        }
+
+        /* ── VIDEO CARD ── */
         .video-card {
-            background: white;
-            border-radius: 24px;
+            background: var(--card);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.03), 0 3px 6px rgba(0,0,0,0.02);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid #f0eee9;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s, transform 0.3s;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+            border-color: rgba(212,168,71,0.4);
+            transform: translateY(-4px);
         }
 
-        /* responsive embed container (16/9 aspect) */
-        .embed-container {
+        /* ── VIDEO PLAYER AREA ── */
+        .video-player-wrap {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
-            height: 0;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
             overflow: hidden;
-            background: #e6e3db;
+            cursor: pointer;
         }
 
-        .embed-container iframe {
+        /* THUMBNAIL */
+        .video-thumb {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+
+        .video-thumb.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* dim on hover */
+        .video-player-wrap:hover .video-thumb:not(.hidden)::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* PLAY BUTTON */
+        .play-btn {
+            width: 64px;
+            height: 64px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 8px rgba(212,168,71,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 3;
+        }
+
+        .play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #0c0b09;
+            margin-left: 3px;
+        }
+
+        .video-player-wrap:hover .play-btn {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 12px rgba(212,168,71,0.15);
+        }
+
+        /* IFRAME */
+        .video-frame {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             border: 0;
+            z-index: 1;
         }
 
-        .card-content {
-            padding: 1.5rem 1.2rem 1.8rem;
-        }
-
-        .video-meta {
+        /* LOADING SPINNER shown while iframe loads */
+        .loading-ring {
+            position: absolute;
+            inset: 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            color: #77746f;
-            font-size: 0.9rem;
-            margin-top: 0.8rem;
+            justify-content: center;
+            z-index: 1;
+            background: #000;
         }
 
-        .video-tag {
-            background: #f4f2ee;
-            padding: 0.2rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
+        .loading-ring::after {
+            content: '';
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(212,168,71,0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
 
-        /* === ABOUT / CONTACT === */
-        .bio-section {
-            background: white;
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
-            margin: 4rem 0 2rem;
-            border: 1px solid #e9e5de;
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── CARD BODY ── */
+        .card-body {
+            padding: 1.2rem 1.4rem 1.6rem;
+        }
+
+        .card-body h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.03em;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .card-body p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        .card-meta {
             display: flex;
+            gap: 0.5rem;
+            margin-top: 0.9rem;
             flex-wrap: wrap;
-            gap: 2.5rem;
-            justify-content: space-between;
         }
 
-        .bio-text {
-            flex: 2 1 300px;
+        .tag {
+            background: rgba(212,168,71,0.08);
+            border: 1px solid rgba(212,168,71,0.2);
+            color: var(--accent2);
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
-        .bio-text p {
-            font-size: 1.2rem;
-            color: #2e2e2e;
-            margin-bottom: 1.5rem;
+        /* ── ABOUT SECTION ── */
+        .about-section {
+            border-top: 1px solid var(--border);
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
         }
 
-        .contact-info {
-            flex: 1 1 240px;
-            background: #f8f6f2;
-            border-radius: 24px;
-            padding: 1.8rem 1.8rem;
+        @media (max-width: 700px) {
+            .about-section { grid-template-columns: 1fr; }
         }
 
-        .contact-info h4 {
-            font-weight: 600;
-            font-size: 1.3rem;
+        .about-section h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .about-section p {
+            font-size: 1.05rem;
+            color: #b0a99a;
+            line-height: 1.7;
             margin-bottom: 1rem;
+            font-weight: 300;
         }
 
-        .contact-info ul {
-            list-style: none;
+        .contact-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            align-self: start;
         }
 
-        .contact-info li {
-            margin-bottom: 0.8rem;
+        .contact-box h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-box ul { list-style: none; }
+
+        .contact-box li {
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            color: var(--muted);
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.6rem;
         }
 
-        .contact-info a {
-            color: #1e1e1e;
+        .contact-box a {
+            color: var(--text);
             text-decoration: none;
-            border-bottom: 1px dotted #beb8ae;
+            font-weight: 400;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
         }
 
-        .contact-info a:hover {
-            border-bottom: 2px solid #1e1e1e;
+        .contact-box a:hover {
+            color: var(--accent2);
+            border-color: var(--accent2);
         }
 
-        /* === FOOTER === */
         footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0 3rem;
             text-align: center;
-            color: #6b6b6b;
-            font-size: 0.9rem;
-            margin-top: 5rem;
-            border-top: 1px solid #e0dcd5;
-            padding-top: 2rem;
+            color: var(--muted);
+            font-size: 0.82rem;
         }
 
-        /* === editable notes (invisible while browsing, but visible in code) === */
-        .edit-note {
-            display: none; /* only visible in source */
-        }
+        footer span { color: var(--accent); font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
 
-        /* === responsive tweaks === */
         @media (max-width: 600px) {
-            body { padding: 1rem; }
-            h1 { font-size: 2.4rem; }
-            h2 { font-size: 1.8rem; }
-            .bio-section { padding: 1.8rem; }
+            .container { padding: 0 1rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ========== HEADER ========== -->
-        <header class="hero">
-            <div class="tagline">✂️ video editor · storyteller</div>
-            <h1>YELO<br>moving image portfolio</h1>
-            <p class="subhead">cinematic edits · commercials · music videos · social cuts<br> 
-            <span style="color: #6f6a63;">▼ three featured projects — directly from drive</span></p>
-        </header>
+<div class="container">
 
-        <!-- ========== PORTFOLIO GRID : VIDEOS FROM GOOGLE DRIVE ========== 
-             To add/replace videos: 
-             1. Get the FILE_ID from your google drive share link 
-             2. Replace the ID in the iframe src below 
-             3. Update video title, description and tag 
-        -->
-        <h2>📽️ featured work</h2>
-        <div class="portfolio-grid">
-            <!-- VIDEO 1 -->
-            <article class="video-card">
-                <div class="embed-container">
-                    <!-- Google Drive embed – make sure video is "anyone with link can view" -->
-                    <iframe src="https://drive.google.com/file/d/1A0wuKVUU64XiWRzpOSJPySg1EkJIY4Q0/preview" allow="autoplay" allowfullscreen></iframe>
-                </div>
-                <div class="card-content">
-                    <h3>project: ambient journey</h3>
-                    <p>textured narrative edit · color grading & atmos</p>
-                    <div class="video-meta">
-                        <span class="video-tag">⏱️ 0:42</span>
-                        <span class="video-tag">🎬 short film</span>
+    <!-- HEADER -->
+    <header>
+        <div class="badge">video editor · storyteller</div>
+        <h1>YELO<br><span>EDITS.</span></h1>
+        <p class="subhead">cinematic edits · commercials · music videos · social cuts &nbsp;·&nbsp; click any thumbnail to play</p>
+    </header>
+
+    <!-- WORK -->
+    <div class="section-label"><h2>Featured Work</h2></div>
+
+    <div class="portfolio-grid">
+
+        <!-- CARD 1 — replace data-video-id with your Google Drive file ID -->
+        <article class="video-card">
+            <div class="video-player-wrap" data-video-id="1A0wuKVUU64XiWRzpOSJPySg1EkJIY4Q0">
+                <!-- loading spinner (always behind everything) -->
+                <div class="loading-ring"></div>
+                <!-- thumbnail: change background-image url to your own thumbnail -->
+                <div class="video-thumb" style="background-image: linear-gradient(135deg,#3b3535,#1a1414);">
+                    <div class="play-btn">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </div>
                 </div>
-            </article>
-
-            <!-- VIDEO 2 -->
-            <article class="video-card">
-                <div class="embed-container">
-                    <iframe src="https://drive.google.com/file/d/1yLg_Sba-xXpAhUv42qgwduHMqTHOo9OM/preview" allow="autoplay" allowfullscreen></iframe>
+                <!-- iframe src is set by JS on click -->
+                <iframe class="video-frame" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+            <div class="card-body">
+                <h3>Ambient Journey</h3>
+                <p>Textured narrative edit · color grading & atmospherics</p>
+                <div class="card-meta">
+                    <span class="tag">0:42</span>
+                    <span class="tag">Short Film</span>
                 </div>
-                <div class="card-content">
-                    <h3>project: city pulse</h3>
-                    <p>fast‑paced montage · sync cuts & motion graphics</p>
-                    <div class="video-meta">
-                        <span class="video-tag">⏱️ 0:28</span>
-                        <span class="video-tag">🎥 commercial</span>
+            </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="video-card">
+            <div class="video-player-wrap" data-video-id="1yLg_Sba-xXpAhUv42qgwduHMqTHOo9OM">
+                <div class="loading-ring"></div>
+                <div class="video-thumb" style="background-image: linear-gradient(135deg,#1e3040,#0a1520);">
+                    <div class="play-btn">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </div>
                 </div>
-            </article>
-
-            <!-- VIDEO 3 -->
-            <article class="video-card">
-                <div class="embed-container">
-                    <iframe src="https://drive.google.com/file/d/1gSF4GE5bQSfp8UZiPz1Pp0kUA1e2WMP_/preview" allow="autoplay" allowfullscreen></iframe>
+                <iframe class="video-frame" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+            <div class="card-body">
+                <h3>City Pulse</h3>
+                <p>Fast-paced montage · sync cuts & motion graphics</p>
+                <div class="card-meta">
+                    <span class="tag">0:28</span>
+                    <span class="tag">Commercial</span>
                 </div>
-                <div class="card-content">
-                    <h3>project: raw emotion</h3>
-                    <p>intimate documentary style · interview pacing</p>
-                    <div class="video-meta">
-                        <span class="video-tag">⏱️ 1:12</span>
-                        <span class="video-tag">🎞️ docu</span>
+            </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="video-card">
+            <div class="video-player-wrap" data-video-id="1gSF4GE5bQSfp8UZiPz1Pp0kUA1e2WMP_">
+                <div class="loading-ring"></div>
+                <div class="video-thumb" style="background-image: linear-gradient(135deg,#3d2e1e,#1a1008);">
+                    <div class="play-btn">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </div>
                 </div>
-            </article>
+                <iframe class="video-frame" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+            <div class="card-body">
+                <h3>Raw Emotion</h3>
+                <p>Intimate documentary style · interview pacing</p>
+                <div class="card-meta">
+                    <span class="tag">1:12</span>
+                    <span class="tag">Docu</span>
+                </div>
+            </div>
+        </article>
+
+    </div><!-- /portfolio-grid -->
+
+    <!-- ABOUT -->
+    <section class="about-section">
+        <div>
+            <h2>About</h2>
+            <p>I'm YELO, a video editor with 5+ years of experience shaping stories for brands, artists, and agencies. I work across genres — from fast-paced social cuts to cinematic narratives.</p>
+            <p>Every project is an opportunity to find the rhythm and emotion hidden in the footage.</p>
+            <p><strong style="color:var(--text);">Current gear:</strong> Premiere Pro · DaVinci Resolve · After Effects · FCPX.</p>
+            <p style="color:var(--accent);font-style:italic;margin-top:1.5rem;">— available for freelance & collaborations —</p>
         </div>
+        <div class="contact-box">
+            <h4>Contact</h4>
+            <ul>
+                <li>✉ <a href="mailto:yelo@edit.studio">yelo@edit.studio</a></li>
+                <li>📱 <a href="#">+00 123 456 789</a></li>
+                <li>🔗 <a href="#">linkedin.com/in/yeloedit</a></li>
+                <li>📷 <a href="#">@yelo.cuts</a></li>
+            </ul>
+            <p style="margin-top:1.2rem;font-size:0.85rem;color:var(--muted);">📍 remote worldwide</p>
+        </div>
+    </section>
 
-        <!-- ========== ABOUT & CONTACT (easily editable) ========== -->
-        <section class="bio-section">
-            <div class="bio-text">
-                <h2>✻ about</h2>
-                <p>I’m YELO, a video editor with 5+ years of experience shaping stories for brands, artists, and agencies. I work across genres — from fast‑paced social cuts to cinematic narratives. Every project is an opportunity to find the rhythm and emotion hidden in the footage.</p>
-                <p><strong>current gear:</strong> Premiere Pro · DaVinci Resolve · After Effects · FCPX.</p>
-                <p style="font-style: italic; color: #5a554f;">— available for freelance & collaborations —</p>
-            </div>
-            <div class="contact-info">
-                <h4>📬 contact</h4>
-                <ul>
-                    <li>📧 <a href="mailto:yelo@edit.studio">yelo@edit.studio</a></li>
-                    <li>📱 <a href="#">+00 123 456 789</a></li>
-                    <li>🖇️ <a href="#">linkedin.com/in/yeloedit</a></li>
-                    <li>📷 <a href="#">@yelo.cuts</a></li>
-                </ul>
-                <p style="margin-top: 1.5rem; font-size: 0.95rem; color: #3a3a3a;">📍 based · remote worldwide</p>
-            </div>
-        </section>
+    <footer>
+        <p><span>YELO</span> &nbsp;·&nbsp; video editing &nbsp;·&nbsp; © 2025</p>
+        <p style="margin-top:0.5rem;">to add videos: update <code style="color:var(--accent)">data-video-id</code> with your Google Drive file ID</p>
+    </footer>
 
-        <!-- ========== FOOTER ========== -->
-        <footer>
-            <p>✎ editable portfolio — you can change anything: colors, text, videos, links.<br>
-            designed to be updated in minutes — last edit march 2026</p>
-            <p style="margin-top: 1rem;">© yelo · video editing</p>
-        </footer>
-    </div>
+</div><!-- /container -->
 
-    <!-- ========== HIDDEN NOTES FOR FUTURE EDITING (visible only in code) ========== -->
-    <div style="display: none;">
-        <!-- 
-            ********************************************
-            EDITING GUIDE (remove or keep this block)
-            ********************************************
-            1. To replace a video: 
-               - copy the file ID from a google drive share link 
-                 example: https://drive.google.com/file/d/ **1ABCxyz...** /view
-               - paste it into the iframe "src" attribute inside the embed-container div.
-               - keep the "/preview" at the end: 
-                 e.g., src="https://drive.google.com/file/d/【NEW-ID】/preview"
+<script>
+/* ── Click-to-Play: Google Drive embed ───────────────────────────────── */
+document.querySelectorAll('.video-player-wrap').forEach(function(wrap) {
+    var thumb   = wrap.querySelector('.video-thumb');
+    var iframe  = wrap.querySelector('.video-frame');
+    var videoId = wrap.dataset.videoId;
+    var clicked = false;
 
-            2. Update titles, descriptions and tags inside each .card-content.
+    if (!thumb || !iframe || !videoId) return;
 
-            3. Change profile text, email, social links in the .bio-section.
+    wrap.addEventListener('click', function() {
+        if (clicked) return;          // prevent double-load
+        clicked = true;
 
-            4. Colors, fonts: edit the <style> block at the top.
-               - background, border colors, font families.
+        // ① Set the embed src — Google Drive /preview is the correct embed endpoint
+        iframe.src = 'https://drive.google.com/file/d/' + videoId + '/preview';
 
-            5. To add more videos: 
-               - copy an entire <article class="video-card"> block and paste it inside .portfolio-grid.
-               - remember to update the iframe ID and text.
+        // ② Hide thumbnail AFTER a tiny delay so spinner is visible first
+        setTimeout(function() {
+            thumb.classList.add('hidden');
+        }, 200);
+    });
+});
+</script>
 
-            6. Make sure your Google Drive videos are shared with 
-               "Anyone with the link" → viewer permission.
-               (otherwise the embed will show a sign-in wall)
-            ********************************************
-        -->
-    </div>
+<!--
+════════════════════════════════════════════
+  HOW TO CUSTOMIZE
+════════════════════════════════════════════
 
-    <!-- optional tiny script to make contact links editable (no functionality needed, but placeholder) -->
-    <script>
-        // absolutely nothing required – just a placeholder to remind you 
-        // you can later add lightbox or tracking if needed.
-        // the portfolio is fully static and editable.
-        console.log('🎬 YELO portfolio — ready for edits');
-    </script>
+  1. REPLACE VIDEO ID
+     Find: data-video-id="xxxxxxxxxxxx"
+     Replace the value with YOUR Google Drive file ID.
+     
+     How to get the ID from a Drive share link:
+     https://drive.google.com/file/d/  <<< THIS PART >>> /view?usp=sharing
+     
+     IMPORTANT: The file must be set to "Anyone with the link can view"
+     in Google Drive sharing settings, otherwise the embed will be blocked.
+
+  2. CHANGE THUMBNAIL
+     Each .video-thumb has a style="background-image: ..."
+     Replace the gradient with your own image:
+     style="background-image: url('https://your-image-url.jpg');"
+     Or just keep the gradient — it looks good!
+
+  3. ADD MORE VIDEOS
+     Copy an entire <article class="video-card"> ... </article> block.
+     Update: data-video-id, background-image, title, description, tags.
+
+  4. COLOURS
+     Edit the :root { } CSS variables at the top of the <style> block.
+════════════════════════════════════════════
+-->
 </body>
 </html>
