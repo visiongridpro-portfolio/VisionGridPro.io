@@ -3,274 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio - Graphic Designer & Video Editor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Video editor portfolio · YELO</title>
+    <!-- Google Fonts for clean typography (editable) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
     <style>
+        /* === RESET & BASE === */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-            color: #fff;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #faf9f6;
+            color: #1e1e1e;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
         }
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem 2rem;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeIn 1s ease-in;
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
         }
-        header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        nav {
-            display: flex;
-            gap: 1rem;
-        }
-        nav button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s, transform 0.3s;
-        }
-        nav button:hover {
-            color: #ff6b6b;
-            transform: scale(1.1);
-        }
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: url('https://via.placeholder.com/1920x1080/333/fff?text=Hero+Background') no-repeat center/cover;
-            animation: slideIn 1.5s ease-out;
-        }
-        .hero h2 {
+
+        /* === TYPOGRAPHY (easy to edit) === */
+        h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out 0.5s both;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 1s both;
-        }
-        .hero button {
-            background: #ff6b6b;
-            color: #fff;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-            animation: fadeInUp 1s ease-out 1.5s both;
-        }
-        .hero button:hover {
-            background: #ff5252;
-            transform: translateY(-5px);
-        }
-        .portfolio {
-            padding: 5rem 2rem;
-            min-height: 100vh;
-        }
-        .portfolio h3 {
-            text-align: center;
+
+        h2 {
             font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
             margin-bottom: 2rem;
-            animation: fadeIn 1s ease-in;
+            border-bottom: 3px solid #e6e3db;
+            padding-bottom: 0.5rem;
         }
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
+
+        h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
         }
-        .tabs button {
-            background: #333;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #4a4a4a;
+            max-width: 650px;
+            margin: 1.5rem 0 2.5rem;
         }
-        .tabs button.active {
-            background: #ff6b6b;
+
+        /* === HEADER / HERO === */
+        .hero {
+            margin-bottom: 3rem;
         }
+
+        .tagline {
+            display: inline-block;
+            background: #e6e3db;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* === VIDEO GRID === */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
+            margin: 3rem 0 4rem;
         }
-        .portfolio-item {
-            position: relative;
+
+        .video-card {
+            background: white;
+            border-radius: 24px;
             overflow: hidden;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03), 0 3px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #f0eee9;
         }
-        .portfolio-item:hover {
-            transform: scale(1.05);
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
         }
-        .portfolio-item img, .portfolio-item video {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: opacity 0.3s;
+
+        /* responsive embed container (16/9 aspect) */
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #e6e3db;
         }
-        .portfolio-item:hover img, .portfolio-item:hover video {
-            opacity: 0.7;
-        }
-        .portfolio-item .overlay {
+
+        .embed-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            border: 0;
+        }
+
+        .card-content {
+            padding: 1.5rem 1.2rem 1.8rem;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #77746f;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+        }
+
+        .video-tag {
+            background: #f4f2ee;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* === ABOUT / CONTACT === */
+        .bio-section {
+            background: white;
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            margin: 4rem 0 2rem;
+            border: 1px solid #e9e5de;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: space-between;
+        }
+
+        .bio-text {
+            flex: 2 1 300px;
+        }
+
+        .bio-text p {
+            font-size: 1.2rem;
+            color: #2e2e2e;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            flex: 1 1 240px;
+            background: #f8f6f2;
+            border-radius: 24px;
+            padding: 1.8rem 1.8rem;
+        }
+
+        .contact-info h4 {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info ul {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
+            gap: 0.7rem;
         }
-        .portfolio-item:hover .overlay {
-            opacity: 1;
+
+        .contact-info a {
+            color: #1e1e1e;
+            text-decoration: none;
+            border-bottom: 1px dotted #beb8ae;
         }
-        .portfolio-item .overlay h4 {
-            color: #fff;
-            font-size: 1.2rem;
+
+        .contact-info a:hover {
+            border-bottom: 2px solid #1e1e1e;
         }
+
+        /* === FOOTER === */
         footer {
-            background: #000;
-            padding: 2rem;
             text-align: center;
-            animation: fadeIn 1s ease-in;
+            color: #6b6b6b;
+            font-size: 0.9rem;
+            margin-top: 5rem;
+            border-top: 1px solid #e0dcd5;
+            padding-top: 2rem;
         }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
+
+        /* === editable notes (invisible while browsing, but visible in code) === */
+        .edit-note {
+            display: none; /* only visible in source */
         }
-        .social-links a {
-            color: #fff;
-            font-size: 1.5rem;
-            transition: color 0.3s, transform 0.3s;
-        }
-        .social-links a:hover {
-            color: #ff6b6b;
-            transform: scale(1.2);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @media (max-width: 768px) {
-            .hero h2 { font-size: 2rem; }
-            .portfolio-grid { grid-template-columns: 1fr; }
+
+        /* === responsive tweaks === */
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.8rem; }
+            .bio-section { padding: 1.8rem; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Your Name</h1>
-        <nav>
-            <button onclick="scrollToSection('hero')">Home</button>
-            <button onclick="scrollToSection('portfolio')">Portfolio</button>
-            <button onclick="scrollToSection('footer')">Contact</button>
-        </nav>
-    </header>
+    <div class="container">
+        <!-- ========== HEADER ========== -->
+        <header class="hero">
+            <div class="tagline">✂️ video editor · storyteller</div>
+            <h1>YELO<br>moving image portfolio</h1>
+            <p class="subhead">cinematic edits · commercials · music videos · social cuts<br> 
+            <span style="color: #6f6a63;">▼ three featured projects — directly from drive</span></p>
+        </header>
 
-    <section id="hero" class="hero">
-        <h2>Graphic Designer & Video Editor</h2>
-        <p>Showcasing my creative work in design and editing.</p>
-        <button onclick="scrollToSection('portfolio')">View Portfolio</button>
-    </section>
+        <!-- ========== PORTFOLIO GRID : VIDEOS FROM GOOGLE DRIVE ========== 
+             To add/replace videos: 
+             1. Get the FILE_ID from your google drive share link 
+             2. Replace the ID in the iframe src below 
+             3. Update video title, description and tag 
+        -->
+        <h2>📽️ featured work</h2>
+        <div class="portfolio-grid">
+            <!-- VIDEO 1 -->
+            <article class="video-card">
+                <div class="embed-container">
+                    <!-- Google Drive embed – make sure video is "anyone with link can view" -->
+                    <iframe src="https://drive.google.com/file/d/1A0wuKVUU64XiWRzpOSJPySg1EkJIY4Q0/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+                <div class="card-content">
+                    <h3>project: ambient journey</h3>
+                    <p>textured narrative edit · color grading & atmos</p>
+                    <div class="video-meta">
+                        <span class="video-tag">⏱️ 0:42</span>
+                        <span class="video-tag">🎬 short film</span>
+                    </div>
+                </div>
+            </article>
 
-    <section id="portfolio" class="portfolio">
-        <h3>My Portfolio</h3>
-        <div class="tabs">
-            <button class="active" onclick="showSection('all')">All Work</button>
-            <button onclick="showSection('design')">Graphic Design</button>
-            <button onclick="showSection('editing')">Editing</button>
-        </div>
-        <div id="all" class="portfolio-grid">
-            <!-- All Work Items -->
-            <div class="portfolio-item" onclick="window.open('#', '_blank')">
-                <img src="https://via.placeholder.com/300x200/666/fff?text=Design+1" alt="Design 1">
-                <div class="overlay"><h4>Project Title 1</h4></div>
-            </div>
-            <div class="portfolio-item" onclick="window.open('#', '_blank')">
-                <video controls>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
-                <div class="overlay"><h4>Edit Project 1</h4></div>
-            </div>
-            <!-- Add more items as needed -->
-        </div>
-        <div id="design" class="portfolio-grid" style="display: none;">
-            <!-- Graphic Design Items -->
-            <div class="portfolio-item" onclick="window.open('#', '_blank')">
-                <img src="https://via.placeholder.com/300x200/777/fff?text=Design+2" alt="Design 2">
-                <div class="overlay"><h4>Design Project 2</h4></div>
-            </div>
-            <!-- Add more -->
-        </div>
-        <div id="editing" class="portfolio-grid" style="display: none;">
-            <!-- Editing Items -->
-            <div class="portfolio-item" onclick="window.open('#', '_blank')">
-                <video controls>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
-                <div class="overlay"><h4>Edit Project 2</h4></div>
-            </div>
-            <!-- Add more -->
-        </div>
-    </section>
+            <!-- VIDEO 2 -->
+            <article class="video-card">
+                <div class="embed-container">
+                    <iframe src="https://drive.google.com/file/d/1yLg_Sba-xXpAhUv42qgwduHMqTHOo9OM/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+                <div class="card-content">
+                    <h3>project: city pulse</h3>
+                    <p>fast‑paced montage · sync cuts & motion graphics</p>
+                    <div class="video-meta">
+                        <span class="video-tag">⏱️ 0:28</span>
+                        <span class="video-tag">🎥 commercial</span>
+                    </div>
+                </div>
+            </article>
 
-    <footer id="footer">
-        <p>Connect with me</p>
-        <div class="social-links">
-            <a href="#instagram" target="_blank">Instagram</a>
-            <a href="#pinterest" target="_blank">Pinterest</a>
-            <a href="#discord" target="_blank">Discord</a>
-            <a href="#threads" target="_blank">Threads</a>
+            <!-- VIDEO 3 -->
+            <article class="video-card">
+                <div class="embed-container">
+                    <iframe src="https://drive.google.com/file/d/1gSF4GE5bQSfp8UZiPz1Pp0kUA1e2WMP_/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+                <div class="card-content">
+                    <h3>project: raw emotion</h3>
+                    <p>intimate documentary style · interview pacing</p>
+                    <div class="video-meta">
+                        <span class="video-tag">⏱️ 1:12</span>
+                        <span class="video-tag">🎞️ docu</span>
+                    </div>
+                </div>
+            </article>
         </div>
-    </footer>
 
+        <!-- ========== ABOUT & CONTACT (easily editable) ========== -->
+        <section class="bio-section">
+            <div class="bio-text">
+                <h2>✻ about</h2>
+                <p>I’m YELO, a video editor with 5+ years of experience shaping stories for brands, artists, and agencies. I work across genres — from fast‑paced social cuts to cinematic narratives. Every project is an opportunity to find the rhythm and emotion hidden in the footage.</p>
+                <p><strong>current gear:</strong> Premiere Pro · DaVinci Resolve · After Effects · FCPX.</p>
+                <p style="font-style: italic; color: #5a554f;">— available for freelance & collaborations —</p>
+            </div>
+            <div class="contact-info">
+                <h4>📬 contact</h4>
+                <ul>
+                    <li>📧 <a href="mailto:yelo@edit.studio">yelo@edit.studio</a></li>
+                    <li>📱 <a href="#">+00 123 456 789</a></li>
+                    <li>🖇️ <a href="#">linkedin.com/in/yeloedit</a></li>
+                    <li>📷 <a href="#">@yelo.cuts</a></li>
+                </ul>
+                <p style="margin-top: 1.5rem; font-size: 0.95rem; color: #3a3a3a;">📍 based · remote worldwide</p>
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer>
+            <p>✎ editable portfolio — you can change anything: colors, text, videos, links.<br>
+            designed to be updated in minutes — last edit march 2026</p>
+            <p style="margin-top: 1rem;">© yelo · video editing</p>
+        </footer>
+    </div>
+
+    <!-- ========== HIDDEN NOTES FOR FUTURE EDITING (visible only in code) ========== -->
+    <div style="display: none;">
+        <!-- 
+            ********************************************
+            EDITING GUIDE (remove or keep this block)
+            ********************************************
+            1. To replace a video: 
+               - copy the file ID from a google drive share link 
+                 example: https://drive.google.com/file/d/ **1ABCxyz...** /view
+               - paste it into the iframe "src" attribute inside the embed-container div.
+               - keep the "/preview" at the end: 
+                 e.g., src="https://drive.google.com/file/d/【NEW-ID】/preview"
+
+            2. Update titles, descriptions and tags inside each .card-content.
+
+            3. Change profile text, email, social links in the .bio-section.
+
+            4. Colors, fonts: edit the <style> block at the top.
+               - background, border colors, font families.
+
+            5. To add more videos: 
+               - copy an entire <article class="video-card"> block and paste it inside .portfolio-grid.
+               - remember to update the iframe ID and text.
+
+            6. Make sure your Google Drive videos are shared with 
+               "Anyone with the link" → viewer permission.
+               (otherwise the embed will show a sign-in wall)
+            ********************************************
+        -->
+    </div>
+
+    <!-- optional tiny script to make contact links editable (no functionality needed, but placeholder) -->
     <script>
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showSection(section) {
-            document.querySelectorAll('.portfolio-grid').forEach(grid => grid.style.display = 'none');
-            document.getElementById(section).style.display = 'grid';
-            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
+        // absolutely nothing required – just a placeholder to remind you 
+        // you can later add lightbox or tracking if needed.
+        // the portfolio is fully static and editable.
+        console.log('🎬 YELO portfolio — ready for edits');
     </script>
 </body>
 </html>
