@@ -1,1 +1,274 @@
+from pathlib import Path
+import zipfile
+
+root = Path("/mnt/data/VisionGridPro-Portfolio")
+root.mkdir(exist_ok=True)
+
+index_html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VisionGrid Pro — freelance video editor, motion designer and graphic designer.">
+  <title>VisionGrid Pro — Creative Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070b12;--surface:#0c121c;--surface2:#101825;--text:#f5f7fb;
+      --muted:#8d99aa;--line:rgba(255,255,255,.09);--accent:#8bd8ff;
+      --max:1180px
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:min(1120px,calc(100% - 40px));margin:auto}
+    nav{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    .brand{font:700 20px "Space Grotesk";letter-spacing:-.5px}
+    .brand i{color:var(--accent);font-style:normal}
+    .nav-links{display:flex;gap:28px;color:var(--muted);font-size:14px}
+    .nav-links a:hover{color:var(--text)}
+    .hero{min-height:calc(100vh - 78px);display:flex;align-items:center;position:relative;padding:100px 0}
+    .hero:after{content:"";position:absolute;width:500px;height:500px;right:-180px;top:80px;background:radial-gradient(circle,rgba(139,216,255,.12),transparent 68%);pointer-events:none}
+    .kicker{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:22px}
+    h1{font:700 clamp(54px,8vw,96px)/.93 "Space Grotesk";letter-spacing:-5px;max-width:1000px}
+    h1 span{color:transparent;-webkit-text-stroke:1px rgba(245,247,251,.48)}
+    .hero-copy{max-width:630px;color:var(--muted);font-size:18px;line-height:1.7;margin:30px 0}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 19px;border:1px solid var(--line);border-radius:8px;font-weight:700;font-size:14px;transition:.22s}
+    .btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.25)}
+    .btn.primary{background:#f5f7fb;color:#070b12}
+    section{padding:110px 0;border-top:1px solid var(--line)}
+    .section-top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:42px}
+    .section-top h2{font:600 clamp(36px,5vw,56px)/1 "Space Grotesk";letter-spacing:-2.5px}
+    .section-top p{color:var(--muted);max-width:430px;line-height:1.7}
+    .work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .work-card{grid-column:span 6;min-height:390px;border:1px solid var(--line);border-radius:15px;overflow:hidden;background:var(--surface);position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:28px}
+    .work-card:nth-child(3){grid-column:span 5}
+    .work-card:nth-child(4){grid-column:span 7}
+    .visual{position:absolute;inset:0;background:
+      radial-gradient(circle at 75% 25%,rgba(139,216,255,.18),transparent 25%),
+      radial-gradient(circle at 20% 75%,rgba(159,130,255,.15),transparent 28%),
+      linear-gradient(135deg,#111c2d,#080d15 65%);
+    }
+    .visual:before{content:"";position:absolute;width:210px;height:210px;border:1px solid rgba(255,255,255,.12);transform:rotate(28deg);right:14%;top:15%;border-radius:28px}
+    .visual:after{content:"";position:absolute;width:150px;height:150px;border:1px solid rgba(139,216,255,.22);transform:rotate(-18deg);left:12%;bottom:18%;border-radius:50%}
+    .work-content{position:relative;z-index:1}
+    .work-number{font-size:11px;color:#a9b4c4;letter-spacing:1.5px;margin-bottom:90px}
+    .work-card h3{font:600 28px "Space Grotesk";margin-bottom:7px}
+    .work-card p{color:#a6b0bf;font-size:14px;max-width:470px}
+    .pill{display:inline-block;color:var(--accent);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:16px}
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+    .service{background:var(--bg);padding:34px;min-height:245px}
+    .service-no{font:600 12px "Space Grotesk";color:#667386}
+    .service h3{font:600 24px "Space Grotesk";margin:48px 0 10px}
+    .service p{color:var(--muted);font-size:14px;line-height:1.7}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
+    .about-title{font:600 clamp(40px,5vw,62px)/1 "Space Grotesk";letter-spacing:-3px}
+    .about-text{color:var(--muted);line-height:1.8;margin-top:20px;max-width:560px}
+    .skills{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .skill{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:22px}
+    .skill strong{font:600 25px "Space Grotesk";display:block}
+    .skill span{color:var(--muted);font-size:13px}
+    .contact-box{border:1px solid var(--line);border-radius:18px;padding:60px;background:linear-gradient(135deg,rgba(139,216,255,.08),rgba(159,130,255,.05))}
+    .contact-box h2{font:600 clamp(42px,6vw,76px)/.98 "Space Grotesk";letter-spacing:-3px;max-width:780px}
+    .contact-box p{color:var(--muted);margin:20px 0 30px}
+    footer{border-top:1px solid var(--line);padding:25px 0;color:#697588;font-size:13px;display:flex;justify-content:space-between}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.show{opacity:1;transform:none}
+    @media(max-width:760px){
+      .container{width:min(100% - 28px,1120px)}
+      .nav-links{display:none}
+      .hero{padding:75px 0;min-height:auto}
+      h1{letter-spacing:-3px}
+      .hero-copy{font-size:16px}
+      section{padding:78px 0}
+      .section-top{display:block}
+      .section-top p{margin-top:15px}
+      .work-grid{display:block}
+      .work-card{min-height:300px;margin-bottom:12px}
+      .work-number{margin-bottom:65px}
+      .services,.about-grid{grid-template-columns:1fr}
+      .about-grid{gap:40px}
+      .skills{grid-template-columns:1fr 1fr}
+      .contact-box{padding:35px 24px}
+      footer{gap:15px;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="#" class="brand">VISION<i>GRID</i> PRO</a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <div class="reveal">
+          <div class="kicker">Freelance Creative · India</div>
+          <h1>Visuals that make people <span>stop scrolling.</span></h1>
+          <p class="hero-copy">
+            I’m Chetan — a freelance video editor and graphic designer creating
+            short-form content, motion graphics and visual design for creators and brands.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="#work">View my work ↓</a>
+            <a class="btn" href="mailto:visiongrid.pro@gmail.com">Start a project ↗</a>
+          </div>
+        </div>
+      </header>
+
+      <section id="work">
+        <div class="section-top reveal">
+          <h2>Selected work</h2>
+          <p>Your actual projects should replace these showcase panels. Put the strongest work first — not everything you have ever made.</p>
+        </div>
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="visual"></div>
+            <div class="work-content">
+              <div class="work-number">01 / VIDEO EDITING</div>
+              <h3>Short-form content</h3>
+              <p>Reels and Shorts built around pacing, retention, typography and purposeful motion.</p>
+              <div class="pill">Reels · Shorts</div>
+            </div>
+          </article>
+          <article class="work-card reveal">
+            <div class="visual"></div>
+            <div class="work-content">
+              <div class="work-number">02 / MOTION DESIGN</div>
+              <h3>Motion graphics</h3>
+              <p>Animated typography, transitions, tracking and compositing that add visual impact.</p>
+              <div class="pill">After Effects</div>
+            </div>
+          </article>
+          <article class="work-card reveal">
+            <div class="visual"></div>
+            <div class="work-content">
+              <div class="work-number">03 / GRAPHIC DESIGN</div>
+              <h3>Brand visuals</h3>
+              <p>Logos, posters and social graphics designed to stay clear and recognisable.</p>
+              <div class="pill">Branding · Social</div>
+            </div>
+          </article>
+          <article class="work-card reveal">
+            <div class="visual"></div>
+            <div class="work-content">
+              <div class="work-number">04 / CASE STUDY</div>
+              <h3>Featured project</h3>
+              <p>Use this larger slot for your best client project and show the result, process and final output.</p>
+              <div class="pill">Project showcase</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="section-top reveal">
+          <h2>What I do</h2>
+          <p>Focused creative services instead of a long list of random skills.</p>
+        </div>
+        <div class="services">
+          <article class="service reveal">
+            <div class="service-no">01</div>
+            <h3>Video Editing</h3>
+            <p>High-retention Reels, Shorts and social videos with clean pacing, typography and visual rhythm.</p>
+          </article>
+          <article class="service reveal">
+            <div class="service-no">02</div>
+            <h3>Motion Graphics</h3>
+            <p>Text animation, transitions, tracking, compositing and custom motion built around the content.</p>
+          </article>
+          <article class="service reveal">
+            <div class="service-no">03</div>
+            <h3>Graphic Design</h3>
+            <p>Logos, social graphics and visual assets that keep your brand consistent across platforms.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="about-grid">
+          <div class="reveal">
+            <div class="kicker">About</div>
+            <h2 class="about-title">Design. Motion. Editing.</h2>
+            <p class="about-text">
+              I work across video editing and graphic design to create content that feels intentional
+              instead of templated. My workflow is centered around Adobe After Effects and Photoshop,
+              with a strong focus on social-first visuals.
+            </p>
+          </div>
+          <div class="skills reveal">
+            <div class="skill"><strong>AE</strong><span>Motion & compositing</span></div>
+            <div class="skill"><strong>PS</strong><span>Graphic design</span></div>
+            <div class="skill"><strong>MG</strong><span>Motion graphics</span></div>
+            <div class="skill"><strong>EDIT</strong><span>Short-form editing</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="contact-box reveal">
+          <div class="kicker">Have a project?</div>
+          <h2>Let’s make something worth watching.</h2>
+          <p>Tell me what you’re working on and what you need help with.</p>
+          <div class="actions">
+            <a class="btn primary" href="mailto:visiongrid.pro@gmail.com">Email me ↗</a>
+            <a class="btn" href="https://www.instagram.com/baffling.speed/" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 VisionGrid Pro</span>
+      <span>Video Editor · Motion Designer · Graphic Designer</span>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    }, {threshold: .12});
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
+'''
+
+(root / "index.html").write_text(index_html, encoding="utf-8")
+
+readme = """# VisionGrid Pro Portfolio
+
+A responsive portfolio website for VisionGrid Pro.
+
+## Run locally
+Open `index.html` in a browser.
+
+## Add your work
+Replace the placeholder work cards in `index.html` with your real project thumbnails/videos and links.
+
+## Deploy
+This is a static site and can be deployed directly with GitHub Pages, Netlify or Vercel.
+"""
+(root / "README.md").write_text(readme, encoding="utf-8")
+
+zip_path = Path("/mnt/data/VisionGridPro-Portfolio.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for file in root.iterdir():
+        z.write(file, file.name)
+
+print(f"Created: {zip_path}")
+print("Files: index.html, README.md")
 
