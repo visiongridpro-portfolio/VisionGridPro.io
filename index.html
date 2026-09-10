@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="A video-first portfolio." />
     <title>Your Name — Video Portfolio</title>
-    <link rel="preconnect" href="https://www.youtube-nocookie.com" />
     <link rel="preconnect" href="https://i.ytimg.com" />
     <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
@@ -230,10 +229,9 @@ h2 { margin: 8px 0 0; font-size: clamp(34px, 4vw, 58px); font-weight: 600; lette
 
 </style>
 
-    <!-- Video.js player (YouTube playback via videojs-youtube) -->
+    <!-- Video.js player (HTML5 only — no YouTube) -->
     <link rel="stylesheet" href="https://vjs.zencdn.net/8.24.0/video-js.min.css" />
     <script src="https://vjs.zencdn.net/8.24.0/video.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/videojs-youtube@3.0.1/dist/Youtube.min.js"></script>
   </head>
   <body>
     <canvas id="anime-bg" aria-hidden="true"></canvas>
@@ -348,10 +346,10 @@ h2 { margin: 8px 0 0; font-size: clamp(34px, 4vw, 58px); font-weight: 600; lette
     <script>
 /*
   QUICK UPDATE GUIDE
-  1. Replace Your Name, role, email, Instagram and WhatsApp details below.
-  2. Paste the full YouTube URL (unlisted URLs work) or just its video ID in `youtube`.
+  1. Put your MP4 videos in a `videos` folder next to this HTML file.
+  2. Add/change each project's `src` to the MP4 filename.
   3. Change project titles / descriptions as needed.
-  4. To collect ratings from every visitor, add your form-service endpoint to `ratingEndpoint`.
+  4. Video.js uses the browser's native HTML5 video playback — no YouTube is used.
 */
 const site = {
   name: 'Buffling Speed (Chetan)',
@@ -363,76 +361,29 @@ const site = {
 };
 
 const projects = [
-  {
-    title: 'Video 01',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/4pOXjAnKeYI?feature=share',
-  },
-  {
-    title: 'Video 02',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/GTPcxI39aWg?feature=share',
-  },
-  {
-    title: 'Video 03',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/5SSZikLi3BE?feature=share',
-  },
-  {
-    title: 'Video 04',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/9WVambaotTU?feature=share',
-  },
-  {
-    title: 'Video 05',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/3f68WGkMlEI?feature=share',
-  },
-  {
-    title: 'Video 06',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/gtUtih0e9HI?feature=share',
-  },
-  {
-    title: 'Video 07',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/L8lJ0l1kmBA?feature=share',
-  },
-  {
-    title: 'Video 08',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/lJ6QsfuK3Uk?feature=share',
-  },
-  {
-    title: 'Video 09',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/Zvvc_ejTGIo?feature=share',
-  },
-  {
-    title: 'Video 10',
-    type: 'Short-form film',
-    youtube: 'https://youtube.com/shorts/ZB4-b1aDfk4?feature=share',
-  },
+  { title: 'Video 01', type: 'Short-form film', src: 'videos/video-01.mp4' },
+  { title: 'Video 02', type: 'Short-form film', src: 'videos/video-02.mp4' },
+  { title: 'Video 03', type: 'Short-form film', src: 'videos/video-03.mp4' },
+  { title: 'Video 04', type: 'Short-form film', src: 'videos/video-04.mp4' },
+  { title: 'Video 05', type: 'Short-form film', src: 'videos/video-05.mp4' },
+  { title: 'Video 06', type: 'Short-form film', src: 'videos/video-06.mp4' },
+  { title: 'Video 07', type: 'Short-form film', src: 'videos/video-07.mp4' },
+  { title: 'Video 08', type: 'Short-form film', src: 'videos/video-08.mp4' },
+  { title: 'Video 09', type: 'Short-form film', src: 'videos/video-09.mp4' },
+  { title: 'Video 10', type: 'Short-form film', src: 'videos/video-10.mp4' },
 ];
-
-const youTubeId = (value) => {
-  if (!value) return '';
-  const match = String(value).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
-  return match ? match[1] : String(value).trim();
-};
 
 const makeCard = (project, index) => {
   const template = document.querySelector('#video-card-template');
   const card = template.content.firstElementChild.cloneNode(true);
   const frame = card.querySelector('.video-frame');
-  const id = youTubeId(project.youtube);
   const number = String(index + 1).padStart(2, '0');
 
   card.querySelector('h3').textContent = project.title;
   card.querySelector('.card-meta p').textContent = project.type;
   card.querySelector('.card-number').textContent = number;
 
-  if (id) {
+  if (project.src) {
     const playerId = `portfolio-video-${index + 1}`;
     frame.innerHTML = `
       <video
@@ -444,7 +395,7 @@ const makeCard = (project, index) => {
         aria-label="${project.title}"
       ></video>`;
     card.dataset.playerId = playerId;
-    card.dataset.youtubeUrl = project.youtube;
+    card.dataset.videoSrc = project.src;
     card.dataset.videoTitle = project.title;
   } else {
     card.querySelector('.placeholder-number').textContent = number;
@@ -475,11 +426,11 @@ const cards = projects.map((project, index) => {
   return card;
 });
 
-/* Initialize Video.js only after all cards are already on the page.
-   This prevents one player/plugin error from hiding the whole portfolio. */
+/* Initialize plain HTML5 Video.js players. No YouTube plugin or iframe is used. */
 cards.forEach((card) => {
   const playerId = card.dataset.playerId;
-  if (!playerId || typeof videojs !== 'function') return;
+  const videoSrc = card.dataset.videoSrc;
+  if (!playerId || !videoSrc || typeof videojs !== 'function') return;
 
   try {
     const player = videojs(playerId, {
@@ -487,18 +438,11 @@ cards.forEach((card) => {
       fluid: false,
       responsive: true,
       preload: 'metadata',
-      techOrder: ['youtube'],
+      techOrder: ['html5'],
       sources: [{
-        type: 'video/youtube',
-        src: `https://www.youtube.com/watch?v=${youTubeId(card.dataset.youtubeUrl)}`,
+        type: 'video/mp4',
+        src: videoSrc,
       }],
-      youtube: {
-        enablePrivacyEnhancedMode: true,
-        modestbranding: 1,
-        rel: 0,
-        iv_load_policy: 3,
-        playsinline: 1,
-      },
     });
 
     player.ready(() => {
